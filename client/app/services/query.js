@@ -86,6 +86,8 @@ class Parameters {
     this.query = query;
     this.updateParameters();
     this.initFromQueryString(queryString);
+	this.ignoreEmpty = true;
+
   }
 
   parseQuery() {
@@ -141,8 +143,11 @@ class Parameters {
   }
 
   getMissing() {
-	this.get();
-    return false;
+	if(this.ignoreEmpty == true)
+		return false;
+	else{
+		return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
+	}
   }
 
   isRequired() {
