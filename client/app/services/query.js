@@ -1,6 +1,6 @@
 import moment from 'moment';
 import Mustache from 'mustache';
-import { each, object, isEmpty, pluck, contains, union, uniq, has } from 'underscore';
+import { each, object, isEmpty, pluck, contains, union, filter, uniq, has } from 'underscore';
 
 function collectParams(parts) {
   let parameters = [];
@@ -86,8 +86,7 @@ class Parameters {
     this.query = query;
     this.updateParameters();
     this.initFromQueryString(queryString);
-	this.ignoreEmpty = true;
-
+    this.ignoreEmpty = true;
   }
 
   parseQuery() {
@@ -143,11 +142,12 @@ class Parameters {
   }
 
   getMissing() {
-	if(this.ignoreEmpty == true)
-		return false;
-	else{
-		return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
-	}
+    if (this.ignoreEmpty === true) {
+        return false;
+    }
+    else {
+        return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
+    }
   }
 
   isRequired() {
