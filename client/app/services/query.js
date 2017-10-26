@@ -141,7 +141,8 @@ class Parameters {
   }
 
   getMissing() {
-    return false;//pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
+    return false;
+	//pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
   }
 
   isRequired() {
