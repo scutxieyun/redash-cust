@@ -145,7 +145,7 @@ class Parameters {
     if (this.ignoreEmpty === true) {
       return false;
     }
-	return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
+    return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
   }
 
   isRequired() {
