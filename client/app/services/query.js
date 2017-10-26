@@ -143,10 +143,9 @@ class Parameters {
 
   getMissing() {
     if (this.ignoreEmpty === true) {
-        return false;
-    }
-    else {
-        return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
+      return false;
+    } else {
+      return pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
     }
   }
 
