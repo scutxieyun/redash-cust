@@ -1,6 +1,6 @@
 import moment from 'moment';
 import Mustache from 'mustache';
-import { each, object, isEmpty, pluck, filter, contains, union, uniq, has } from 'underscore';
+import { each, object, isEmpty, pluck, contains, union, uniq, has } from 'underscore';
 
 function collectParams(parts) {
   let parameters = [];
@@ -142,7 +142,6 @@ class Parameters {
 
   getMissing() {
     return false;
-	//pluck(filter(this.get(), p => p.value === null || p.value === ''), 'title');
   }
 
   isRequired() {
