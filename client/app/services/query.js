@@ -141,6 +141,7 @@ class Parameters {
   }
 
   getMissing() {
+	this.get();
     return false;
   }
 
