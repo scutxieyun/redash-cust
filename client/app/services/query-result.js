@@ -213,7 +213,7 @@ function QueryResultService($resource, $timeout, $q) {
                if (!isArray(filter.current)) {
                  filter.current = [filter.current];
                }
-			   // if no choice, by default do not apply filter
+               // if no choice, by default do not apply filter
                if (filter.current.length === 0) return memo;
                return (memo && some(filter.current, (v) => {
                  const value = row[filter.name];
