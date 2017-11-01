@@ -1,4 +1,5 @@
 FROM redash/redash
+RUN pip install pycas
 RUN npm install
 COPY client/app/services/query.js /app/client/app/services/query.js
 COPY client/app/services/query-result.js /app/client/app/services/query-result.js
