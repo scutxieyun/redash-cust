@@ -7,7 +7,7 @@ COPY client/app/components/parameters.js /app/client/app/components/parameters.j
 COPY client/app/components/parameters.html /app/client/app/components/parameters.html 
 COPY client/app/pages/queries/query.html /app/client/app/pages/queries/query.html
 RUN npm run build
-COPY /app/contribute/oracle/oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb /tmp
+COPY contribute/oracle/oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb /tmp
 RUN dpkg -i /tmp/oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb && ln -s /usr/lib/oracle/12.2/client64/lib/libclntsh.so.12.1 /usr/lib/oracle/12.2/client64/lib/libclntsh.so && echo "/usr/lib/oracle/12.2/client64/lib/" > /etc/ld.so.conf.d/oracle.conf && /sbin/ldconfig
 RUN pip install cx_oracle
 ENTRYPOINT ["/bin/bash"]
