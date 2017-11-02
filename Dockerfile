@@ -14,4 +14,6 @@ RUN ln -s /usr/lib/oracle/12.2/client64/lib/libclntsh.so.12.1 /usr/lib/oracle/12
 RUN echo "/usr/lib/oracle/12.2/client64/lib/" > /etc/ld.so.conf.d/oracle.conf 
 RUN /sbin/ldconfig
 RUN pip install cx_oracle
+USER redash
+COPY redash/query_runner/oracle.py /app/redash/query_runner/oracle.py 
 ENTRYPOINT ["/bin/bash"]
