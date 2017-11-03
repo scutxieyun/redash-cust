@@ -1,8 +1,8 @@
 FROM redash/redash
-RUN root
+USER root
 RUN apt-get update -y 
 RUN apt-get install libaio-dev -y
-RUN redash
+USER redash
 RUN pip install pycas
 RUN npm install
 COPY client/app/services/query.js /app/client/app/services/query.js
