@@ -3,39 +3,56 @@
 version: '2'
 services:
   server:
-    image: scutxieyun2017/redash-cust
-    command: dev_server
+    image: scutxieyun2017/redash-cust:latest
+    stdin_open: true
+    tty: true
+    #command: server
+    working_dir: /app1
+    entrypoint: /bin/bash
     depends_on:
       - postgres
       - redis
+      - worker
     ports:
       - "0.0.0.0:5000:5000"
-    volumes:
-      - ".:/app"
+    volumes_from:
+      - worker      
     environment:
       PYTHONUNBUFFERED: 0
+      SERVICE_URL: "http://localhost:5000/cas/login"
+      CAS_SERVER: "http://a8-domain.pagoda.com.cn:20106"
       REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
-      REDASH_DATABASE_URL: "postgresql://postgres@postgres/postgres"
+      REDASH_DATABASE_URL: "postgresql://postgres:postgres@postgres/postgres"
   worker:
+    depends_on:
+      - postgres
+      - redis
     image: scutxieyun2017/redash-cust
     command: scheduler
-    volumes_from:
-      - server
-    depends_on:
-      - server
+    working_dir: /app1
+    entrypoint: bin/docker-entrypoint
+    volumes:
+      - "d:\\work\\redash-pagoda:/app1"  
     environment:
       PYTHONUNBUFFERED: 0
       REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
-      REDASH_DATABASE_URL: "postgresql://postgres@postgres/postgres"
+      REDASH_DATABASE_URL: "postgresql://postgres:postgres@postgres/postgres"
       QUEUES: "queries,scheduled_queries,celery"
       WORKERS_COUNT: 2
   redis:
     image: redis:3.0-alpine
   postgres:
     image: postgres:9.5.6-alpine
+    volumes:
+      - "postgres_db:/var/lib/postgresql/data:rw" 
+    environment:
+      POSTGRES_PASSWORD: "postgres"
     # The following turns the DB into less durable, but gains significant performance improvements for the tests run (x3
     # improvement on my personal machine). We should consider moving this into a dedicated Docker Compose configuration for
     # tests.
     command: "postgres -c fsync=off -c full_page_writes=off -c synchronous_commit=OFF"
+    #command: "/bin/bash"
+volumes:
+  postgres_db:
