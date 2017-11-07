@@ -20,7 +20,7 @@ services:
     environment:
       PYTHONUNBUFFERED: 0
       SERVICE_URL: "http://localhost:5000/cas/login"
-      CAS_SERVER: "http://a8-domain.pagoda.com.cn:20106"
+      CAS_SERVER: "https://cas.pagoda.com.cn:10003"
       REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
       REDASH_DATABASE_URL: "postgresql://postgres:postgres@postgres/postgres"

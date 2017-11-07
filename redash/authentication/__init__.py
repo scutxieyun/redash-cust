@@ -19,7 +19,7 @@ logger = logging.getLogger('authentication')
 def get_login_url(external=False, next="/"):
     endpoint = 'redash.login'
     if settings.CAS_SERVER and settings.SERVICE_URL:
-        endpoint = cas_auth.cas_login
+        endpoint = 'cas_auth.cas_login'
     if settings.MULTI_ORG and current_org == None:
         login_url = '/'
     elif settings.MULTI_ORG:
