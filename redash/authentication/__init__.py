@@ -17,7 +17,7 @@ logger = logging.getLogger('authentication')
 
 
 def get_login_url(external=False, next="/"):
-    endpoint = 'redash.index'
+    endpoint = 'redash.login'
     if settings.CAS_SERVER and settings.SERVICE_URL:
         endpoint = cas_auth.cas_login
     if settings.MULTI_ORG and current_org == None:
@@ -30,7 +30,7 @@ def get_login_url(external=False, next="/"):
     return login_url
 ##simple version for logout   
 def get_logout_url(external=False, next="/"):
-    if session['orgCode'] is not None:
+    if session.has_key('orgCode') is not None:
         logout_url = url_for('cas_auth.cas_logout')
     else:
         logout_url = url_for('redash.index')

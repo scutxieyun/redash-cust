@@ -19,7 +19,7 @@ def cas_login():
     next_path = request.args.get('next')
     if not settings.CAS_SERVER and not settings.SERVICE_URL:
         logger.error("CAS Server or SERVICE URL not set")
-        return redirect(url_for('redash.index'))
+        return redirect(url_for('redash.login'))
     status, id, cookie = pycas.login(settings.CAS_SERVER, settings.SERVICE_URL, secure=0, opt="gateway")
     if not pycas.CAS_OK == status:
         logger.error("CAS Login failed")
