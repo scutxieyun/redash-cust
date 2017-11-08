@@ -26,6 +26,7 @@ def cas_login():
         if pycas.CAS_REDIRECT == status:
             return redirect(settings.CAS_SERVER + "/cas/login?service=" + settings.SERVICE_URL, code = 302)
         return redirect(url_for('redash.index'))
+    set_dev_tag(id)
     logger.debug(session)
     create_and_login_user(current_org,id,session['email'])
     return redirect(next_path or url_for('redash.index'), code=302)
@@ -36,5 +37,11 @@ def cas_logout():
         return redirect(url_for('redash.index'))
     return redirect(settings.CAS_SERVER + "/cas/logout", code = 302)
 
-    
-
+def set_dev_tag(id):
+    if settings.DEV_MEMBERS is not None:
+        logger.debug(settings.DEV_MEMBERS + "   " + id)
+        if settings.DEV_MEMBERS.find(id) >= 0:
+            session['dev'] = "true"
+        else:
+            session['dev'] = 'false'
+            

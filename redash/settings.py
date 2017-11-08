@@ -110,7 +110,7 @@ SAML_CALLBACK_SERVER_NAME = os.environ.get("REDASH_SAML_CALLBACK_SERVER_NAME", "
 
 CAS_SERVER = os.environ.get("CAS_SERVER","")
 SERVICE_URL = os.environ.get("SERVICE_URL","")
-
+DEV_MEMBERS = os.environ.get("DEV_MEMBERS","")
 
 # Enables the use of an externally-provided and trusted remote user via an HTTP
 # header.  The "user" must be an email address.

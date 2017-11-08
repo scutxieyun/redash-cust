@@ -192,8 +192,11 @@ def session(org_slug=None):
         email_md5 = hashlib.md5(current_user.email.lower()).hexdigest()
         gravatar_url = "https://www.gravatar.com/avatar/%s?s=40" % email_md5
         orgCode = None
+        devTag = True
         if flask_session.has_key('orgCode'):
             orgCode = flask_session['orgCode']
+        if flask_session.has_key('dev') and flask_session['dev'] == 'false':
+            devTag = False
         user = {
             'gravatar_url': gravatar_url,
             'id': current_user.id,
@@ -201,7 +204,8 @@ def session(org_slug=None):
             'email': current_user.email,
             'groups': current_user.group_ids,
             'permissions': current_user.permissions,
-            'orgCode': orgCode
+            'orgCode': orgCode,
+            'dev': devTag
         }
         if flask_session.has_key('name'):
             user['name'] = flask_session['name']

@@ -15,12 +15,15 @@ services:
       - worker
     ports:
       - "0.0.0.0:5000:5000"
+      - "0.0.0.0:8888:8080"
     volumes_from:
       - worker      
     environment:
       PYTHONUNBUFFERED: 0
+      DEV_SERVER_HOST: "0.0.0.0"
       SERVICE_URL: "http://localhost:5000/cas/login"
       CAS_SERVER: "https://cas.pagoda.com.cn:10003"
+      DEV_MEMBERS: "011737"
       REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
       REDASH_DATABASE_URL: "postgresql://postgres:postgres@postgres/postgres"
