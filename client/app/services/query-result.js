@@ -211,6 +211,8 @@ function QueryResultService($resource, $timeout, $q) {
           this.filteredData = this.query_result.data.rows.filter(row =>
              filters.reduce((memo, filter) => {
                if (!isArray(filter.current)) {
+                 // no filter if the value is all
+                 if (filter.current === '--所有--') return memo;
                  filter.current = [filter.current];
                }
                // if no choice, by default do not apply filter
@@ -362,6 +364,11 @@ function QueryResultService($resource, $timeout, $q) {
             values: [],
             multiple: (type === 'multiFilter') || (type === 'multi-filter'),
           };
+          // xieyun:if single selection, put all in it
+          if (filter.multiple === false) {
+            filter.values.push('--所有--');
+            filter.current = '--所有--';
+          }
           filters.push(filter);
         }
       }, this);
@@ -371,9 +378,10 @@ function QueryResultService($resource, $timeout, $q) {
           filter.values.push(row[filter.name]);
           if (filter.values.length === 1) {
             if (filter.multiple) {
-              filter.current = [row[filter.name]];
+              // xieyun: show all data by default
+              filter.current = [];
             } else {
-              filter.current = row[filter.name];
+              // filter.current = row[filter.name];
             }
           }
         });
