@@ -1,4 +1,4 @@
-FROM redash/redash
+FROM redash/redash:v2.0.0
 USER root
 RUN apt-get update -y 
 RUN apt-get install libaio-dev -y
