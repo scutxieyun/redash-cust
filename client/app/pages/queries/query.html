@@ -157,7 +157,7 @@
         <button class="btn btn-sm btn-default" ng-click="executeQuery()"
                 ng-disabled="queryExecuting || !canExecuteQuery()" title="Refresh Dataset"
                 ng-if="!sourceMode"><span
-          class="zmdi zmdi-refresh"></span>刷新</button>
+          class="zmdi zmdi-refresh"></span></button>
         <div class="btn-group" uib-dropdown>
           <button type="button" class="btn btn-default btn-sm dropdown-toggle"
                   ng-disabled="queryExecuting || !queryResult.getData()" aria-haspopup="true"
@@ -213,6 +213,10 @@
       <div class="row">
         <div class="col-lg-12">
           <parameters parameters="query.getParametersDefs()" sync-values="!query.isNew()" editable="sourceMode && canEdit"></parameters>
+          <button class="btn btn-sm btn-default" ng-click="executeQuery()"
+                ng-disabled="queryExecuting || !canExecuteQuery()" title="Refresh Dataset"
+                ng-if="!sourceMode"><span
+          class="zmdi zmdi-refresh"></span>查询</button>
           <!-- Query Execution Status -->
           <div class="alert alert-info" ng-show="queryResult.getStatus() == 'processing'">
             Executing query&hellip;
