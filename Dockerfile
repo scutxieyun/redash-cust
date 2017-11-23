@@ -21,9 +21,11 @@ USER redash
 
 COPY redash/query_runner/oracle.py /app/redash/query_runner/oracle.py 
 COPY redash/settings.py /app/redash/settings.py
+COPY redash/models.py /app/redash/models.py
 COPY redash/authentication/__init__.py /app/redash/authentication/__init__.py
 COPY redash/authentication/cas_auth.py /app/redash/authentication/cas_auth.py
 COPY redash/authentication/pycas.py /app/redash/authentication/pycas.py
+COPY redash/authentication/google_oauth.py /app/redash/authentication/google_oauth.py
 COPY redash/handlers/authentication.py /app/redash/handlers/authentication.py
 
 ENTRYPOINT ["/bin/bash"]
