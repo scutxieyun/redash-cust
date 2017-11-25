@@ -20,6 +20,8 @@ def cas_login():
     if not settings.CAS_SERVER and not settings.SERVICE_URL:
         logger.error("CAS Server or SERVICE URL not set")
         return redirect(url_for('redash.login'))
+    if (not session.has_key('next_path') or session['next_path'] == None) and next_path is not None:
+        session['next_path'] = next_path
     status, id, cookie = pycas.login(settings.CAS_SERVER, settings.SERVICE_URL, secure=0, opt="gateway")
     if not pycas.CAS_OK == status:
         logger.error("CAS Login failed")
@@ -29,6 +31,9 @@ def cas_login():
     set_dev_tag(id)
     logger.debug(session)
     create_and_login_user(current_org,id,session['email'])
+    if session.has_key('next_path') and session['next_path'] is not None:
+        next_path = session['next_path']
+        session['next_path'] = None
     return redirect(next_path or url_for('redash.index'), code=302)
 @blueprint.route("/cas/logout")
 def cas_logout():
