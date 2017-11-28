@@ -9,9 +9,9 @@ COPY client/app/services/query-result.js /app/client/app/services/query-result.j
 COPY client/app/components/parameters.js /app/client/app/components/parameters.js 
 COPY client/app/components/parameters.html /app/client/app/components/parameters.html 
 COPY client/app/pages/queries/query.html /app/client/app/pages/queries/query.html
-COPY client/app/pages/dashboards/dashboard.html /app/client/pages/dashboards/dashboard.html
-COPY client/app/pages/queries-list/index.js /app/client/pages/queries-list/index.js
-COPY client/app/components/app-header/app-header.html /app/client/components/app-header/app-header.html
+COPY client/app/pages/dashboards/dashboard.html /app/client/app/pages/dashboards/dashboard.html
+COPY client/app/pages/queries-list/index.js /app/client/app/pages/queries-list/index.js
+COPY client/app/components/app-header/app-header.html /app/client/app/components/app-header/app-header.html
 RUN npm run build
 COPY contribute/oracle/oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb /tmp
 USER root
