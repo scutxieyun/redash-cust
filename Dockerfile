@@ -5,6 +5,7 @@ RUN apt-get install libaio-dev -y
 USER redash
 RUN npm install
 COPY client/app/services/query.js /app/client/app/services/query.js
+COPY client/app/services/auth.js /app/client/app/services/auth.js
 COPY client/app/services/query-result.js /app/client/app/services/query-result.js
 COPY client/app/components/parameters.js /app/client/app/components/parameters.js 
 COPY client/app/components/parameters.html /app/client/app/components/parameters.html 
