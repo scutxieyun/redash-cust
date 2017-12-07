@@ -3,6 +3,7 @@ USER root
 RUN apt-get update -y 
 RUN apt-get install libaio-dev -y
 USER redash
+COPY package.json /app/package.json
 RUN npm install
 COPY client/app/services/query.js /app/client/app/services/query.js
 COPY client/app/services/auth.js /app/client/app/services/auth.js
