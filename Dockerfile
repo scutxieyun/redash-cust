@@ -5,6 +5,11 @@ RUN apt-get install libaio-dev -y
 USER redash
 COPY package.json /app/package.json
 RUN npm install
+COPY webpack.config.js /app/webpack.config.js
+COPY client/.eslintrc.js /app/client/.eslintrc.js
+COPY client/app/pages/dashboards/widget.html /app/client/app/pages/dashboards/widget.html
+COPY client/app/pages/dashboards/widget.js /app/client/app/pages/dashboards/widget.js
+COPY client/app/pages/queries/view.js /app/client/app/pages/queries/view.js
 COPY client/app/services/query.js /app/client/app/services/query.js
 COPY client/app/services/auth.js /app/client/app/services/auth.js
 COPY client/app/services/query-result.js /app/client/app/services/query-result.js

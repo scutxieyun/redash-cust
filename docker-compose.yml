@@ -9,6 +9,7 @@ services:
     #command: server
     working_dir: /app1
     entrypoint: /bin/bash
+    #bin/docker-entrypoint
     depends_on:
       - postgres
       - redis
@@ -22,11 +23,12 @@ services:
       PYTHONUNBUFFERED: 0
       DEV_SERVER_HOST: "0.0.0.0"
       SERVICE_URL: "http://localhost:5000/cas/login"
-      CAS_SERVER: "https://cas.pagoda.com.cn:10003"
+      CAS_SERVER: "https://cas.pagoda.com.cn"
       DEV_MEMBERS: "011737"
       REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
       REDASH_DATABASE_URL: "postgresql://postgres:postgres@postgres/postgres"
+      LOG_FORMAT: "%(asctime)-15s %(clientip)s %(user)-8s %(message)s"
   worker:
     depends_on:
       - postgres
@@ -39,6 +41,7 @@ services:
       - "d:\\work\\redash-pagoda:/app1"  
     environment:
       PYTHONUNBUFFERED: 0
+      DEV_MEMBERS: "011737"
       REDASH_LOG_LEVEL: "DEBUG"
       REDASH_REDIS_URL: "redis://redis:6379/0"
       REDASH_DATABASE_URL: "postgresql://postgres:postgres@postgres/postgres"
@@ -50,6 +53,8 @@ services:
     image: postgres:9.5.6-alpine
     volumes:
       - "postgres_db:/var/lib/postgresql/data:rw" 
+    ports:
+      - "0.0.0.0:5432:5432"
     environment:
       POSTGRES_PASSWORD: "postgres"
     # The following turns the DB into less durable, but gains significant performance improvements for the tests run (x3

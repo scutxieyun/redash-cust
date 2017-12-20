@@ -49,9 +49,9 @@ class Parameter {
     this.name = parameter.name;
     this.type = parameter.type;
     this.value = parameter.value;
-    // if (this.type === 'date' && (this.value === null || this.value === '')) {
-    // this.value = moment().toDate();
-    // }
+    if (this.type === 'date' && (this.value === null || this.value === '')) {
+      this.value = moment().toDate();
+    }
     this.global = parameter.global;
     this.enumOptions = parameter.enumOptions;
   }

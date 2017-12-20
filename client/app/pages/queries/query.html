@@ -166,12 +166,12 @@
           </button>
           <ul class="dropdown-menu pull-right" uib-dropdown-menu>
             <li>
-              <a query-result-link target="_self">
+              <a ng-click="downloadFile('csv')" target="_self">
                 <span class="fa fa-file-o"></span> 下载CSV文件
               </a>
             </li>
             <li>
-              <a query-result-link file-type="xlsx" target="_self">
+              <a ng-click="downloadFile('xlsx')" target="_self">
                 <span class="fa fa-file-excel-o"></span> 下载Excel文件
               </a>
             </li>
