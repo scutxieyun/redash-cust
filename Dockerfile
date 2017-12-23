@@ -7,6 +7,11 @@ COPY package.json /app/package.json
 RUN npm install
 COPY webpack.config.js /app/webpack.config.js
 COPY client/.eslintrc.js /app/client/.eslintrc.js
+COPY client/app/services/index.js /app/client/app/services/index.js
+COPY client/app/utils/index.js /app/client/app/utils/index.js
+COPY client/app/utils/data2xlsx.js /app/client/app/utils/data2xlsx.js
+COPY client/app/pages/queries/visualization-embed.html /app/client/app/pages/queries/visualization-embed.html
+COPY client/app/pages/queries/visualization-embed.js /app/client/app/pages/queries/visualization-embed.js
 COPY client/app/pages/dashboards/widget.html /app/client/app/pages/dashboards/widget.html
 COPY client/app/pages/dashboards/widget.js /app/client/app/pages/dashboards/widget.js
 COPY client/app/pages/queries/view.js /app/client/app/pages/queries/view.js
@@ -37,5 +42,6 @@ COPY redash/authentication/cas_auth.py /app/redash/authentication/cas_auth.py
 COPY redash/authentication/pycas.py /app/redash/authentication/pycas.py
 COPY redash/authentication/google_oauth.py /app/redash/authentication/google_oauth.py
 COPY redash/handlers/authentication.py /app/redash/handlers/authentication.py
+COPY redash/handlers/query_results.py /app/redash/handlers/query_results.py
 
 ENTRYPOINT ["/bin/bash"]

@@ -85,10 +85,10 @@ class Parameter {
 }
 
 class Parameters {
-  constructor(query, queryString) {
+  constructor(query, params) {
     this.query = query;
     this.updateParameters();
-    this.initFromQueryString(queryString);
+    this.initFromQueryString(params);
     this.ignoreEmpty = true;
   }
 
@@ -343,6 +343,8 @@ function QueryResource($resource, $http, $q, $location, currentUser, QueryResult
   return Query;
 }
 
-export default function (ngModule) {
+function QueryDef(ngModule) {
   ngModule.factory('Query', QueryResource);
 }
+export { QueryDef, Parameters };
+

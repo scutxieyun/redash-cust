@@ -142,7 +142,8 @@ def log_user_logged_in(app, user):
 def redirect_to_login():
     if request.is_xhr or '/api/' in request.path:
         response = jsonify({'message': "Couldn't find resource. Please login and try again."})
-        response.status_code = 404
+        # xieyun, set the status to 401
+        response.status_code = 401
         return response
 
     login_url = get_login_url(next=request.url, external=False)
