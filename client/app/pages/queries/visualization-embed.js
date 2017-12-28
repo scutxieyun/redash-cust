@@ -40,24 +40,26 @@ export default function (ngModule) {
     return Auth.loadConfig();
   }
 
-  function retrieveJob($http, jobInfo) {
-    if (jobInfo.status !== 3) {
-      return $http.get(`api/jobs/${jobInfo.id}`).then((response) => {
+  function retrieveJob($http, apiKey, jobInfo) {
+    if (jobInfo.status < 3) {
+      // wait for result
+      return $http.get(`api/jobs/${jobInfo.id}?api_key=${apiKey}`).then((response) => {
         if (response.data.job === null) {
           response.job = 1;
         }
-        return retrieveJob($http, response.data.job);
+        return retrieveJob($http, apiKey, response.data.job);
       });
     }
     if (jobInfo.status === 3) {
-      return $http.get(`api/query_results/${jobInfo.query_result_id}`).then((response) => {
+      // $http.header('Accept-Encoding', 'gzip');
+      return $http.get(`api/query_results/${jobInfo.query_result_id}?api_key=${apiKey}`).then((response) => {
         if (response.data === null) {
           response.data = 0;
         }
         return response.data;
       });
     }
-    return jobInfo;
+    return [];
   }
 
   function loadData($http, $route, $q, Auth) {
@@ -66,6 +68,7 @@ export default function (ngModule) {
       return $http.get(`api/queries/${queryId}`).then((response) => {
         const queryRes = response.data;
         const sqlParams = new Parameters(queryRes, $route.current.params);
+        const apiKey = $route.current.params.api_key;
         const queryText = Mustache.render(queryRes.query, sqlParams.getValues());
         const params = {
           data_source_id: queryRes.data_source_id,
@@ -73,11 +76,11 @@ export default function (ngModule) {
           max_age: 0,
           query_id: queryId,
         };
-        const queryResult = $http.post('api/query_results', params).then((rsp) => {
+        const queryResult = $http.post(`api/query_results?api_key=${apiKey}`, params).then((rsp) => {
           if (rsp.data.job === null) {
             rsp.job = { id: 1 };
           }
-          return retrieveJob($http, rsp.data.job);
+          return retrieveJob($http, apiKey, rsp.data.job);
         });
         return $q.all([queryRes, queryResult]);
       });

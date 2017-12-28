@@ -169,4 +169,4 @@ def setup_authentication(app):
         login_manager.request_loader(api_key_load_user_from_request)
     else:
         logger.warning("Unknown authentication type ({}). Using default (HMAC).".format(settings.AUTH_TYPE))
-        login_manager.request_loader(hmac_load_user_from_request)
+        login_manager.request_loader(api_key_load_user_from_request)
