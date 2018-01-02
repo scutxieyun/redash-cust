@@ -24,7 +24,7 @@ COPY client/app/pages/queries/query.html /app/client/app/pages/queries/query.htm
 COPY client/app/pages/dashboards/dashboard.html /app/client/app/pages/dashboards/dashboard.html
 COPY client/app/pages/queries-list/index.js /app/client/app/pages/queries-list/index.js
 COPY client/app/components/app-header/app-header.html /app/client/app/components/app-header/app-header.html
-COPY client/app/visualizations/pivot/index.js /app/visualizations/pivot/index.js
+COPY client/app/visualizations/pivot/index.js /app/client/app/visualizations/pivot/index.js
 RUN npm run build
 COPY contribute/oracle/oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb /tmp
 USER root
