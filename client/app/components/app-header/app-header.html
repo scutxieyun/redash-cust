@@ -17,7 +17,7 @@
             <span class="visible-sm"><i class="zmdi zmdi-view-dashboard"></i> <b class="caret"></b></span>
           </a>
           <ul class="dropdown-menu" uib-dropdown-menu>
-            <li><a ng-show="$ctrl.showNewDashboardMenu" ng-click="$ctrl.newDashboard()">新建看板</a></li>
+            <li><a ng-show="$ctrl.showNewQueryMenu" ng-click="$ctrl.newDashboard()">新建看板</a></li><!--谢云临时改动-->
             <li><a href="dashboards">看板列表</a></li>
             <li class="divider" ng-if="$ctrl.dashboards | notEmpty"></li>
             <li ng-repeat="dashboard in $ctrl.dashboards">
