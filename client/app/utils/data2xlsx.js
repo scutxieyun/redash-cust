@@ -8,7 +8,14 @@ function s2ab(s) {
   return buf;
 }
 
-function downloadXlsxInternal(queryResult, fileType) {
+function filter(obj) {
+  if (typeof obj === 'string') {
+    return obj.replace(/<\/?[^>]*>/g, '');
+  }
+  return obj;
+}
+
+function downloadXlsxInternal(queryResult, fileName) {
   if (queryResult && queryResult.getData() !== null) {
     const rows = queryResult.getData();
     const columns = queryResult.getColumns();
@@ -16,14 +23,14 @@ function downloadXlsxInternal(queryResult, fileType) {
     rows.forEach((row) => {
       const jsonObj = [];
       columns.forEach((col) => {
-        jsonObj[col.title] = row[col.name];
+        jsonObj[col.title] = filter(row[col.name]);
       });
       data.push(jsonObj);
     });
     const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} };
     wb.Sheets.Sheet1 = XLSX.utils.json_to_sheet(data);
     const wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
-    FileSaver.saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), queryResult.getName('test', fileType));
+    FileSaver.saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), fileName);
   }
 }
 
@@ -32,8 +39,8 @@ export default class XlsxGenerator {
     this.queryResult = queryResult;
   }
 
-  downloadXlsx(fileType) {
-    downloadXlsxInternal(this.queryResult, fileType);
+  downloadXlsx(fileName) {
+    downloadXlsxInternal(this.queryResult, fileName);
   }
 }
 

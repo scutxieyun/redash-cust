@@ -1,5 +1,4 @@
-import XLSX from 'xlsx';
-import FileSaver from 'file-saver';
+import { default as XlsxGenerator } from '../../utils/data2xlsx';
 import template from './widget.html';
 import editTextBoxTemplate from './edit-text-box.html';
 
@@ -69,28 +68,8 @@ function DashboardWidgetCtrl($location, $uibModal, $window, Events, currentUser)
     });
   };
   this.downloadWidget = (fileType) => {
-    if (this.queryResult && this.queryResult.getData() !== null) {
-      const rows = this.queryResult.getData();
-      const columns = this.queryResult.getColumns();
-      const data = [];
-      rows.forEach((row) => {
-        const jsonObj = [];
-        columns.forEach((col) => {
-          jsonObj[col.title] = row[col.name];
-        });
-        data.push(jsonObj);
-      });
-      const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} };
-      wb.Sheets.Sheet1 = XLSX.utils.json_to_sheet(data);
-      const wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
-      FileSaver.saveAs(new Blob([this.s2ab(wbout)], { type: 'application/octet-stream' }), this.queryResult.getName(this.query.name, fileType));
-    }
-  };
-  this.s2ab = (s) => {
-    const buf = new ArrayBuffer(s.length);
-    const view = new Uint8Array(buf);
-    for (let i = 0; i !== s.length; i += 1) view[i] = s.charCodeAt(i) & 0xFF;
-    return buf;
+    const generator = new XlsxGenerator(this.queryResult);
+    generator.downloadXlsx(this.queryResult.getName(this.query.name, fileType));
   };
 
   Events.record('view', 'widget', this.widget.id);

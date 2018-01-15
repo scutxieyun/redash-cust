@@ -1,8 +1,7 @@
-import XLSX from 'xlsx';
-import FileSaver from 'file-saver';
 import moment from 'moment';
 import { pick, any, some, find } from 'underscore';
 import template from './query.html';
+import { default as XlsxGenerator } from '../../utils/data2xlsx';
 
 function QueryViewCtrl($scope, Events, $route, $routeParams, $location, $window, $q,
   KeyboardShortcuts, Title, AlertDialog, Notifications, clientConfig, toastr, $uibModal,
@@ -374,31 +373,10 @@ function QueryViewCtrl($scope, Events, $route, $routeParams, $location, $window,
       },
     });
   };
-  function s2ab(s) {
-    const buf = new ArrayBuffer(s.length);
-    const view = new Uint8Array(buf);
-    for (let i = 0; i !== s.length; i += 1) view[i] = s.charCodeAt(i) & 0xFF;
-    return buf;
-  }
 
   $scope.downloadFile = (fileType) => {
-    if ($scope.queryResult && $scope.queryResult.getData() !== null) {
-      const rows = $scope.queryResult.getData();
-      const columns = $scope.queryResult.getColumns();
-      const data = [];
-      rows.forEach((row) => {
-        const jsonObj = [];
-        columns.forEach((col) => {
-          jsonObj[col.title] = row[col.name];
-        });
-        data.push(jsonObj);
-      });
-      const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} };
-      wb.Sheets.Sheet1 = XLSX.utils.json_to_sheet(data);
-      const wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'binary' });
-      const fileName = `${$scope.query.name.replace(' ', '_') + moment($scope.queryResult.getUpdatedAt()).format('_YYYY_MM_DD')}.${fileType}`;
-      FileSaver.saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), fileName);
-    }
+    const generator = new XlsxGenerator($scope.queryResult);
+    generator.downloadXlsx(`${$scope.query.name.replace(' ', '_') + moment($scope.queryResult.getUpdatedAt()).format('_YYYY_MM_DD')}.${fileType}`);
   };
 }
 

@@ -24,7 +24,7 @@ const VisualizationEmbed = {
       find(this.query.visualizations, visualization => visualization.id === visualizationId);
     this.downloadData = (fileType) => {
       const generator = new XlsxGenerator(this.queryResult);
-      generator.downloadXlsx(fileType);
+      generator.downloadXlsx(this.queryResult.getName(this.query.name, fileType));
     };
   },
 };
